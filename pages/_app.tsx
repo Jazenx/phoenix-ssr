@@ -2,26 +2,28 @@ import React from 'react'
 import App from 'next/app'
 import dynamic from 'next/dynamic'
 import GlobalStyle from './../styles/GlobalStyle'
+import { RouteTitles } from './../constants/RouteTitles'
 
 const Layout = dynamic(() => import('./../components/Layout'))
 
-export default class PhoenixApp extends App {
-  // static async getInitialProps({ Component: React.FC, router, ctx }) {
-  //   let pageProps = {}
+class PhoenixApp extends App {
+  static async getInitialProps({ Component, router, ctx }: any) {
+    let pageProps = {}
 
-  //   if (Component.getInitialProps) {
-  //     pageProps = await Component.getInitialProps(ctx)
-  //   }
+    if (Component.getInitialProps) {
+      pageProps = await Component.getInitialProps(ctx)
+    }
 
-  //   return { pageProps }
-  // }
+    return { pageProps }
+  }
 
   render() {
-    const { Component, pageProps } = this.props
+    const { Component, pageProps, router } = this.props
+    const title: string = RouteTitles[router.route]
     return (
       <div>
         <GlobalStyle />
-        <Layout title="Rank">
+        <Layout title={title}>
           {/* 把pageProps解构后传递给组件 */}
           <Component {...pageProps} />
         </Layout>
@@ -29,3 +31,5 @@ export default class PhoenixApp extends App {
     )
   }
 }
+
+export default React.memo(PhoenixApp)

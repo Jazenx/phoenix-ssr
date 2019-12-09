@@ -1,6 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import Link from 'next/link'
+import NavTab from './../NavTab'
+type HeaderNavPorps = {
+  router?: any
+}
 
 const NavWrapper = styled.nav`
   display: flex;
@@ -19,56 +22,32 @@ const NavUl = styled.ul`
   list-style: none;
 `
 
-const NavLi = styled.li`
-  margin-right: 30px;
-  border-bottom: 4px solid orange;
-`
-
-const NavLink = styled.a`
-  padding: 0 10px;
-  text-decoration: none;
-  color: #333333;
-  outline: none;
-  cursor: pointer;
-`
-
 // TODO: nav可后端动态配置
-const HeaderNav: React.FC = () => {
+const HeaderNav: React.FC<HeaderNavPorps> = () => {
+  const TabList = [
+    {
+      key: 'home',
+      name: '首页',
+      pathName: '/'
+    },
+    {
+      key: 'hot',
+      name: '热榜',
+      pathName: '/hot'
+    },
+    {
+      key: 'auto',
+      name: '汽车',
+      pathName: '/auto'
+    }
+  ]
   return (
     <NavWrapper>
       <NavUl>
-        <NavLi>
-          <Link href="/" passHref>
-            <NavLink target="_blank">首页</NavLink>
-          </Link>
-        </NavLi>
-        <NavLi>
-          <Link href="/cook" passHref>
-            <NavLink target="_blank">美食</NavLink>
-          </Link>
-        </NavLi>
-        <NavLi>
-          <Link href="/goods" passHref>
-            <NavLink target="_blank">好物</NavLink>
-          </Link>
-        </NavLi>
-        <NavLi>
-          <Link href="/auto" passHref>
-            <NavLink target="_blank">汽车</NavLink>
-          </Link>
-        </NavLi>
+        {TabList.map(tab => (
+          <NavTab {...tab} />
+        ))}
       </NavUl>
-      {/* <Link href="/">
-        <a>Home</a>
-      </Link>{' '}
-      |{' '}
-      <Link href="/about">
-        <a>About</a>
-      </Link>{' '}
-      |{' '}
-      <Link href="/users">
-        <a>Users List</a>
-      </Link> */}
     </NavWrapper>
   )
 }
