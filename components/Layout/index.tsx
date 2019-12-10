@@ -1,45 +1,64 @@
-import React, { useState, ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 import styled from 'styled-components'
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
 
 const HeaderBanner = dynamic(() => import('./../HeaderBanner'))
 const HeaderNav = dynamic(() => import('./../HeaderNav'))
+const Footer = dynamic(() => import('./../Footer'))
+const RightBar = dynamic(() => import('./../RightBar'))
 
 type Props = {
   children: ReactNode
   title: string
 }
 
-const FuckWrapper = styled.div`
-  height: 100px;
-  width: 100px;
-  background-color: red;
-  color: white;
+const NextWrapper = styled.div`
+  width: 100%;
+  height: 100%;
 `
 
-const Layout: React.FC<Props> = ({
-  children,
-  title = 'This is the default title'
-}) => {
+const ContainerWrapper = styled.div`
+  min-height: 80vh;
+  padding: 20px 0;
+  text-align: center;
+  background-color: #e2e2e2;
+`
+const Container = styled.div`
+  display: flex;
+  justify-content: space-between;
+  max-width: 1100px;
+  margin: 0 auto;
+  border: 1px solid red;
+`
+
+const Main = styled.div`
+  width: 800px;
+  background-color: pink;
+`
+
+const Layout: React.FC<Props> = ({ children, title }) => {
   return (
-    <div>
+    <NextWrapper>
       <Head>
         <title>{title}</title>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <header>
         <HeaderBanner />
         <HeaderNav />
       </header>
-      {children}
+      <ContainerWrapper>
+        <Container>
+          <Main>{children}</Main>
+          <RightBar />
+        </Container>
+      </ContainerWrapper>
       <footer>
-        <hr />
-        <span>I'm here to stay (Footer)</span>
+        <Footer />
       </footer>
-    </div>
+    </NextWrapper>
   )
 }
 
-export default Layout
+export default React.memo(Layout)

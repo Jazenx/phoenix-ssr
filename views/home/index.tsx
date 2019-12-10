@@ -1,18 +1,27 @@
 import React, { useState, useCallback } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { addCount } from '../../redux/actions/count'
 import styled from 'styled-components'
 
-const FuckWrapper = styled.div`
+const HomeWrapper = styled.div`
   height: 100px;
   width: 100px;
   background-color: red;
   color: white;
 `
 
-const Home: React.FC = () => {
-  const [count, setCount] = useState(0)
-  return <FuckWrapper>{count}</FuckWrapper>
+const HomeView: React.FC = () => {
+  const countX: number = useSelector((state: any) => state.count)
+  const dispatch = useDispatch()
+
+  const reduxAdd = useCallback(() => dispatch(addCount(100)), [dispatch])
+
+  return (
+    <HomeWrapper>
+      <span>Home {countX}</span>
+      <button onClick={reduxAdd}>add</button>
+    </HomeWrapper>
+  )
 }
 
-const HomeView = React.memo(Home)
-
-export default HomeView
+export default React.memo(HomeView)

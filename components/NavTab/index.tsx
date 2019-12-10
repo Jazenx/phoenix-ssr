@@ -22,7 +22,6 @@ const NavLi = styled.li<NavLiProps>`
   margin-right: 30px;
   border-bottom: ${props => props.selected && '4px solid orange'};
   &:hover {
-    border-bottom: 4px solid orange;
     & > a {
       color: orange;
     }

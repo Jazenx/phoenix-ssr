@@ -17,7 +17,7 @@ const NavWrapper = styled.nav`
 `
 const NavUl = styled.ul`
   display: flex;
-  width: 80%;
+  width: 1100px;
   justify-content: flex-start;
   list-style: none;
 `
