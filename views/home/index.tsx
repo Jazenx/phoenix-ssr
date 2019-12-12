@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { addCount } from '../../redux/actions/count'
 import styled from 'styled-components'
+import { selectCounts } from './../../redux/selectors/count'
 
 const HomeWrapper = styled.div`
   height: 100px;
@@ -11,14 +12,26 @@ const HomeWrapper = styled.div`
 `
 
 const HomeView: React.FC = () => {
-  const countX: number = useSelector((state: any) => state.count)
+  const [info, setInfo] = useState(9)
+  const countX = useSelector((state: any) => state.count)
+  const scount = useSelector(selectCounts)
   const dispatch = useDispatch()
 
-  const reduxAdd = useCallback(() => dispatch(addCount(100)), [dispatch])
+  const reduxAdd = useCallback(() => dispatch(addCount(Number(info))), [
+    dispatch,
+    info
+  ])
+
+  const handleInfoChange = (e: any) => {
+    console.log(e.target.value)
+    setInfo(e.target.value)
+  }
 
   return (
     <HomeWrapper>
-      <span>Home {countX}</span>
+      {/* <span>Home {countX.toString()}</span> */}
+      <input value={info} onChange={handleInfoChange}></input>
+      <span>reselect {scount.toString()}</span>
       <button onClick={reduxAdd}>add</button>
     </HomeWrapper>
   )
